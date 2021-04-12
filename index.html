@@ -20,8 +20,8 @@
 
 		.top    {height: 5%;}
 		.bottom {height: 95%;}
-		.left   {width: 15%;}
-		.right  {width: 85%;}
+		.left   {width: 25%;}
+		.right  {width: 75%;}
 
 		#tools {display: flex;}
 		#tools > canvas {flex: 1 1;}
@@ -54,9 +54,8 @@
 	</style>
 </head>
 <body>
-	<div id="header" class="top left"></div>
-	<div id="tools" class="top right">
-		<canvas id="constructions"></canvas>
+	<div id="tools" class="top">
+		<canvas id="settings"></canvas>
 		<canvas id="point"></canvas>
 		<canvas id="line"></canvas>
 		<canvas id="circle"></canvas>
@@ -65,11 +64,10 @@
 	<canvas id="canvas" class="bottom right" tabindex="-1"></canvas>
 
 	<script src="data.js"></script>
+	<script src="points.js"></script>
 	<script src="elements.js"></script>
 	<script src="input.js"></script>
 	<script src="paths.js"></script>
-	<script src="points.js"></script>
-
 	<script src="index.js"></script>
 </body>
 </html>

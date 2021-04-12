@@ -1,32 +1,41 @@
 const createChild = (p, s) => p.appendChild(document.createElement(s));
 const removeChildren = p => {while (p.firstChild) p.removeChild(p.lastChild);};
 
-const addProperty = (object, name, optional = false) => {
+const addProperty = (object, name, type, optional = false) => {
 	const div = createChild(sidebar, "div");
 	const span = createChild(div, "span");
 	span.textContent = name;
 
-	const makeInput = v => {
+	const makeInput = () => {
+		if (type === "boolean") return;
 		const input = createChild(div, "input");
 		input.setAttribute("type", "text");
-		input.value = v;
-		input.addEventListener("change", _ => object[name] = input.value);
+		if (optional) input.value = object[name] || object[name + "lastValue"] || "";
+		else input.value = object[name];
+		input.addEventListener("change", _ => {
+			if (type === "number") object[name] = Number(input.value);
+			else if (type === "string") object[name] = input.value;
+			else throw "unrecognized input type";
+		});
+		input.dispatchEvent(new Event("change"));
 	};
 
 	if (optional) {
 		const checkbox = createChild(div, "input");
 		checkbox.setAttribute("type", "checkbox");
 		checkbox.checked = object[name] !== undefined;
-		if (checkbox.checked) makeInput(object[name] || "");
+		if (checkbox.checked) makeInput();
 		checkbox.addEventListener("change", _ => {
-			if (checkbox.checked) makeInput(object[name] || "");
+			if (type === "boolean") object[name] = checkbox.checked;
+			else if (checkbox.checked) makeInput();
 			else {
 				div.removeChild(div.lastChild);
+				object[name + "lastValue"] = object[name];
 				object[name] = undefined;
 			}
 		});
 	}
-	else makeInput(object[name]);
+	else makeInput();
 };
 
 const initCanvasContext = (c, normalizeTransform = true) => {

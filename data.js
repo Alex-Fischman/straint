@@ -7,34 +7,46 @@ points[3].constraints = [
 ];
 
 const paths = [
-	{commands: [{type: "arc", center: points[0], start: points[1], end: points[3]}], fill: "green"},
-	{commands: [{type: "move", p: points[0]}, {type: "line", p: points[2]}], stroke: "red"}
+	{stroke: "blue", z: 0, commands: [
+		{type: "arc", center: points[0], start: points[1], end: points[3]}
+	]},
+	{stroke: "red", z: 1, commands: [
+		{type: "move", p: points[0]},
+		{type: "line", p: points[2]}
+	]},
+	{fill: "green", z: 0, commands: [
+		{type: "move", p: points[0]},
+		{type: "line", p: points[1]},
+		{type: "line", p: points[3]},
+		{type: "line", p: points[0]}
+	]}
 ];
 
 let input = {};
 
-const ctx    = document.getElementById("canvas")       .getContext("2d");
-const constr = document.getElementById("constructions").getContext("2d");
-const point  = document.getElementById("point")        .getContext("2d");
-const line   = document.getElementById("line")         .getContext("2d");
-const circle = document.getElementById("circle")       .getContext("2d");
+const ctx      = document.getElementById("canvas")  .getContext("2d");
+const point    = document.getElementById("point")   .getContext("2d");
+const line     = document.getElementById("line")    .getContext("2d");
+const circle   = document.getElementById("circle")  .getContext("2d");
+const settings = document.getElementById("settings").getContext("2d");
+const sidebar  = document.getElementById("sidebar");
 
-const sidebar = document.getElementById("sidebar");
+const C = {
+	RENDER_CONSTR: true,
 
-let RENDER_CONSTR = true;
+	ZOOM_SPEED: 1.001,
+	MAX_ITER: 5,
 
-const ZOOM_SPEED = 1.001;
-const SOLVER_MAX_ITER = 5;
+	POINT_RADIUS: 10,
+	LINE_WIDTH: 0.01,
+	CONSTRUCTION_WIDTH: 5,
 
-const POINT_RAD = 10;
-const LINE_WIDTH = 0.01;
-const DASH_SPACING = [5, 15];
-const POINT_ALPHA = 0.5;
-const CONSTRUCTION_ALPHA = 0.1;
-const CONSTRUCTION_WIDTH = 5;
+	POINT_ALPHA: 0.5,
+	CONSTRUCTION_ALPHA: 0.1,
 
-const FIX_ICON_SIZE = 25;
-
-const ICON_WIDTH = 0.1;
-const ICON_MATH = 0.75;
-const ICON_PIXEL = 15;
+	DASH_SPACING: [5, 15],
+	
+	FIX_ICON_SIZE: 25,
+	ICON_WIDTH: 0.75,
+	ICON_LINE_WIDTH: 0.1,
+};

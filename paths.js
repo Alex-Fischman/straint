@@ -16,7 +16,7 @@ const setContextPath = p => {
 	}
 	ctx.lineCap   = p.cap   || "round";
 	ctx.lineJoin  = p.join  || "round";
-	ctx.lineWidth = p.width || LINE_WIDTH;
+	ctx.lineWidth = p.width || C.LINE_WIDTH;
 	ctx.globalAlpha = p.alpha === undefined? 1: p.alpha;
 	if (p.fill)   ctx.fillStyle   = p.select? "blue": p.hover? "cyan": p.fill;
 	if (p.stroke) ctx.strokeStyle = p.select? "blue": p.hover? "cyan": p.stroke;
